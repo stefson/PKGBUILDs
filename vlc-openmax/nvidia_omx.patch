@@ -1,0 +1,10 @@
+--- vlc-2.0.4/modules/codec/omxil/omxil.c.orig	2012-10-25 22:44:44.480000003 +0400
++++ vlc-2.0.4/modules/codec/omxil/omxil.c	2012-10-25 22:45:24.240000002 +0400
+@@ -61,6 +61,7 @@
+ #if defined(USE_IOMX)
+     "libiomx.so", /* Not used when using IOMX, the lib should already be loaded */
+ #else
++    "libnvomx.so", /* nvidia L4T driver */
+     "libOMX_Core.so", /* TI OMAP IL core */
+     "libOmxCore.so", /* Qualcomm IL core */
+     "libomxil-bellagio.so",  /* Bellagio IL core */

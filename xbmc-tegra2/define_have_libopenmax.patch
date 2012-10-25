@@ -1,0 +1,16 @@
+--- xbmc-11.0/configure.in	2012-10-25 16:47:26.810001028 +0400
++++ xbmc-11.0/configure.in.orig	2012-10-25 16:37:56.980001029 +0400
+@@ -1428,11 +1428,11 @@
+ else
+   if test "$use_gles" = "yes" && test "$use_openmax" = "auto"; then
+     PKG_CHECK_MODULES([OPENMAX], [libomxil-bellagio],
++                      USE_OPENMAX=1;[INCLUDES="$INCLUDES $OPENMAX_CFLAGS"; LIBS="$LIBS $OPENMAX_LIBS"];AC_DEFINE([HAVE_LIBOPENMAX],[1],["Define to 1 if libusb is installed"]),
+-                      USE_OPENMAX=1;[INCLUDES="$INCLUDES $OPENMAX_CFLAGS"; LIBS="$LIBS $OPENMAX_LIBS"],
+                       use_openmax=no;USE_OPENMAX=0;AC_MSG_RESULT($openmax_not_found))
+   elif test "$use_gles" = "yes" && test "$use_openmax" = "yes"; then
+     PKG_CHECK_MODULES([OPENMAX], [libomxil-bellagio],
++                      USE_OPENMAX=1;[INCLUDES="$INCLUDES $OPENMAX_CFLAGS"; LIBS="$LIBS $OPENMAX_LIBS"];AC_DEFINE([HAVE_LIBOPENMAX],[1],["Define to 1 if libusb is installed"]),
+-                      USE_OPENMAX=1;[INCLUDES="$INCLUDES $OPENMAX_CFLAGS"; LIBS="$LIBS $OPENMAX_LIBS"],
+                       AC_MSG_ERROR($openmax_not_found))
+   else
+     AC_MSG_NOTICE($openmax_disabled)

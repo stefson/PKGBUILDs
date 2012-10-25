@@ -1,0 +1,50 @@
+# Maintainer: Fly-away <Flyaaway@gmail.com>
+
+# NVidia Tegra HardFP drivers, release 16
+# Do not distribute these extensively or expect any support
+
+buildarch=4
+
+pkgname=('nvidia-tegra')
+pkgver=16.2.0
+pkgrel=1
+arch=(armv7h)
+replaces=('nvidia-trimslice')
+conflicts=('nvidia-trimslice')
+license=('GPL')
+url="http://archlinuxarm.org"
+source=('https://launchpad.net/ubuntu/quantal/+source/nvidia-graphics-drivers-tegra/16.2.0-0ubuntu3/+files/nvidia-graphics-drivers-tegra_16.2.0.orig.tar.gz'
+        'https://launchpad.net/ubuntu/quantal/+source/nvidia-graphics-drivers-tegra/16.2.0-0ubuntu3/+files/nvidia-graphics-drivers-tegra_16.2.0-0ubuntu3.debian.tar.gz'
+	'http://developer.download.nvidia.com/devzone/devcenter/tools/files/l4t/r16_Release_v1.0/ventana_release_armhf/ventana_Tegra-Linux-codecs-R16.1.0_armhf.tbz2'
+	'http://developer.download.nvidia.com/devzone/devcenter/tools/files/l4t/r16_Release_v1.0/ventana_release_armhf/ventana_Tegra-Linux-R16.1.0_armhf.tbz2')
+sha1sums=('a9fc7384a9de75108eefdddcfda0d06336fb2772'
+          'b44fc42a07f2bc340fcfe1178524f59cc7285ef3'
+	  '3df5662e233cbba10af89ac19f43cca379408b75'
+	  'e7f3ff2de2957766e75dfdf96cc440c2556993c5')
+options=('!distcc' '!ccache')
+
+package() {
+  pkgdesc="Nvidia drivers for the Tegra"
+  nvlibpath="usr/lib/nvidia-tegra" 
+ 
+  cd ${srcdir}
+  tar xf tegra_bins.tar.gz 
+  tar xf tegra-drivers-abi13.tbz2 
+  tar xf restricted_codecs.tbz2
+  tar xf Linux_for_Tegra/nv_tegra/nv_sample_apps/nvgstapps.tbz2 
+
+  mkdir -p etc/X11/xorg.conf.d lib/udev/rules.d etc/ld.so.conf.d
+  cp debian/61-tegra-gpu.conf etc/X11/xorg.conf.d/
+  cp debian/69-tegra-gpu.rules lib/udev/rules.d/
+  echo "/${nvlibpath}" > etc/ld.so.conf.d/${pkgname}.conf
+
+  mkdir ${nvlibpath}
+  cd usr/lib
+  ln -s libEGL.so.1 libEGL.so
+  ln -s libGLESv2.so.2 libGLESv2.so
+
+  cd ${srcdir}
+  find usr/lib -maxdepth 1 ! -type d  -exec mv {} ${nvlibpath} \;
+  find usr/lib/xorg -type d -exec chmod 755 {} \;  
+  mv etc lib usr ${pkgdir}
+}

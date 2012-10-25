@@ -1,0 +1,30 @@
+--- xbmc-11.0/configure.in.orig	2012-03-22 02:07:50.000000000 +0400
++++ xbmc-11.0/configure.in	2012-10-24 12:04:56.331627047 +0400
+@@ -572,9 +572,9 @@
+     LIBS="$LIBS -framework ApplicationServices"
+   fi
+ elif test "$use_arch" = "arm"; then
+-  CFLAGS="$CFLAGS -mfloat-abi=softfp -mno-apcs-stack-check"
+-  CXXFLAGS="$CXXFLAGS -mfloat-abi=softfp -mno-apcs-stack-check"
+-  FFMPEG_EXTRACFLAGS="-mfloat-abi=softfp"
++  CFLAGS="$CFLAGS -mfloat-abi=hard -mno-apcs-stack-check"
++  CXXFLAGS="$CXXFLAGS -mfloat-abi=hard -mno-apcs-stack-check"
++  FFMPEG_EXTRACFLAGS="-mfloat-abi=hard"
+   if test "$use_tegra" = "yes"; then
+     # Compile for ARMv7a architecture, need to test gcc for vfpv3-d16 support 
+     SAVE_CFLAGS="$CFLAGS"
+--- xbmc-11.0/configure.orig	2012-10-24 17:54:02.790000005 +0400
++++ xbmc-11.0/configure	2012-10-24 17:54:34.830000006 +0400
+@@ -15984,9 +15984,9 @@
+     LIBS="$LIBS -framework ApplicationServices"
+   fi
+ elif test "$use_arch" = "arm"; then
+-  CFLAGS="$CFLAGS -mfloat-abi=softfp -mno-apcs-stack-check"
+-  CXXFLAGS="$CXXFLAGS -mfloat-abi=softfp -mno-apcs-stack-check"
+-  FFMPEG_EXTRACFLAGS="-mfloat-abi=softfp"
++  CFLAGS="$CFLAGS -mfloat-abi=hard -mno-apcs-stack-check"
++  CXXFLAGS="$CXXFLAGS -mfloat-abi=hard -mno-apcs-stack-check"
++  FFMPEG_EXTRACFLAGS="-mfloat-abi=hard"
+   if test "$use_tegra" = "yes"; then
+     # Compile for ARMv7a architecture, need to test gcc for vfpv3-d16 support
+     SAVE_CFLAGS="$CFLAGS"

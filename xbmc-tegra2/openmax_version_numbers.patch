@@ -1,0 +1,45 @@
+--- xbmc-11.0/xbmc/cores/dvdplayer/DVDCodecs/Video/OpenMax.cpp.orig	2012-10-25 17:02:53.550001030 +0400
++++ xbmc-11.0/xbmc/cores/dvdplayer/DVDCodecs/Video/OpenMax.cpp	2012-10-25 17:04:11.770001038 +0400
+@@ -44,6 +44,19 @@
+ 
+ #define CLASSNAME "COpenMax"
+ 
++// check for potentially undefined OpenMAX version numbers
++#ifndef OMX_VERSION_MAJOR
++#define OMX_VERSION_MAJOR 1
++#endif
++#ifndef OMX_VERSION_MINOR
++#define OMX_VERSION_MINOR 1
++#endif
++#ifndef OMX_VERSION_REVISION
++#define OMX_VERSION_REVISION 2
++#endif
++#ifndef OMX_VERSION_STEP
++#define OMX_VERSION_STEP 0
++#endif
+ 
+ ////////////////////////////////////////////////////////////////////////////////////////////
+ class DllLibOpenMaxInterface
+--- xbmc-11.0/xbmc/cores/dvdplayer/DVDCodecs/Video/OpenMaxVideo.cpp.orig	2012-10-25 17:02:39.110001034 +0400
++++ xbmc-11.0/xbmc/cores/dvdplayer/DVDCodecs/Video/OpenMaxVideo.cpp	2012-10-25 17:04:47.910001029 +0400
+@@ -44,6 +44,20 @@
+ 
+ #define CLASSNAME "COpenMaxVideo"
+ 
++// check for potentially undefined OpenMAX version numbers
++#ifndef OMX_VERSION_MAJOR
++#define OMX_VERSION_MAJOR 1
++#endif
++#ifndef OMX_VERSION_MINOR
++#define OMX_VERSION_MINOR 1
++#endif
++#ifndef OMX_VERSION_REVISION
++#define OMX_VERSION_REVISION 2
++#endif
++#ifndef OMX_VERSION_STEP
++#define OMX_VERSION_STEP 0
++#endif
++
+ // TODO: These are Nvidia Tegra2 dependent, need to dynamiclly find the
+ // right codec matched to video format.
+ #define OMX_H264BASE_DECODER    "OMX.Nvidia.h264.decode"
