@@ -24,68 +24,50 @@ optdepends=(
 )
 install="${pkgname}.install"
 source=("http://mirrors.xbmc.org/releases/source/xbmc-$pkgver.tar.gz"
-        tegra2-hardfp.patch
-        define_have_libopenmax.patch 
-        openmax_version_numbers.patch
-        math-asm.patch)
+        'tegra2-hardfp.patch'
+        'define_have_libopenmax.patch' 
+        'openmax_version_numbers.patch'
+        'xbmc-11.0-FEH-py.patch'
+        'math-asm.patch')
 
 sha256sums=('1fe5d310c16138f26e2b13bc545604e95f48ace6c8636f23e77da402cd7b0b19'
             'd1f9e919e1272044a1e6768024e3a53a51af1c6965d1d0e2e6f1bc5a71fe781a'
             'a3c4542be01cab8ab8227c350467d037e0e30cc55b3db62c04730090fa511fa0'
-            '093747d9650e6b246eeca4158c8b116c1177d4d924000c2a730990266e83ca32')
+            '093747d9650e6b246eeca4158c8b116c1177d4d924000c2a730990266e83ca32'
+            '264fa19e36ce3a594fea91ac65558477ca69177d397208182cd6abe66d050bbf'
+            '4bbf7ff14c6a16e51a76292acb15fc17d0fb89b8f80b6f4c2eb1619b0d75fc82')
 
 build() {
   cd "${srcdir}/xbmc-$pkgver"
 
-  #for p in ../*.patch
-  #do
-  #  patch -p1 -i ${p}
-  #done
+  for p in ../*.patch
+  do
+    patch -p1 -i ${p}
+  done
 
   # Bootstrapping XBMC
-  #./bootstrap
+  ./bootstrap
 
   # Configuring XBMC
-#  export PYTHON_VERSION=2  # external python v2
-#  ./configure --prefix=$_prefix --exec-prefix=$_prefix \
-#     --with-cpu=cortex-a9 \
-#     --enable-gles \
-#     --enable-tegra \
-#     --enable-openmax \
-#     --disable-pulse \
-#     --disable-vdpau \
-#     --disable-vaapi \
-#     --disable-joystick \
-#     --disable-optical-drive \
-#     --disable-dvdcss \
-#     --disable-hal \
-#     --disable-avahi \
-#     --disable-libbluray \
-#     --disable-airplay \
-#     --disable-airtunes \
-#     --disable-debug \
-#     OPENMAX_LIBS="-lnvomx"
-##     OPENMAX_CFLAGS="-I/usr/include/OpenMAX/IL -DHAVE_LIBOPENMAX" OPENMAX_LIBS="-lnvomx"
-##    --enable-external-ffmpeg \
-##    --enable-optimizations \
-##    --disable-gl \
-##    --disable-sdl \
-##    --disable-vaapi \
-##    --disable-vdpau \
-##    --disable-pulse \
-##    --disable-airplay \
-##    --disable-airtunes \
-##    --enable-ffmpeg-libvorbis \
-##    --disable-dvdcss \
-##    --disable-hal \
-##    --disable-avahi \
-##    --disable-webserver \
-##    --disable-optical-drive \
-##    --disable-libbluray \
-##    --enable-tegra \
-##    --enable-gles \
-##    --enable-external-libraries \
-##    --disable-external-ffmpeg
+  export PYTHON_VERSION=2  # external python v2
+  ./configure --prefix=$_prefix --exec-prefix=$_prefix \
+     --with-cpu=cortex-a9 \
+     --enable-gles \
+     --enable-tegra \
+     --enable-openmax \
+     --disable-pulse \
+     --disable-vdpau \
+     --disable-vaapi \
+     --disable-joystick \
+     --disable-optical-drive \
+     --disable-dvdcss \
+     --disable-hal \
+     --disable-avahi \
+     --disable-libbluray \
+     --disable-airplay \
+     --disable-airtunes \
+     --disable-debug \
+     OPENMAX_LIBS="-lnvomx"
   # Now (finally) build
   make
   cd tools/TexturePacker/

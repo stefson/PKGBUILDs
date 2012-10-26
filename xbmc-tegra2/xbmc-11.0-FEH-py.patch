@@ -1,0 +1,29 @@
+--- a/tools/Linux/FEH.py	2012-10-27 01:34:48.790000005 +0400
++++ b/tools/Linux/FEH.py	2012-10-27 01:36:59.520000005 +0400
+@@ -131,12 +131,14 @@
+         delta = finish - start
+ 
+ def badDirectRendering():
+-    out = os.popen("glxinfo | grep \"direct rendering\"", 'r')
++    out = os.popen("es2_info | grep \"EGL_CLIENT_APIS:\"", 'r')
+     line = out.read()
+-    direct = "Yes" not in line
++    direct = "OpenGL_ES2" not in line
+     out.close()
+ 
+-    return direct
++    # return direct
++    # always try to run xbmc.bin
++    return 0
+ 
+ def badColorDepth():
+     out = os.popen('xdpyinfo | grep "depth of root"', 'r')
+@@ -170,7 +172,7 @@
+         exit(0)
+ 
+     if (badDirectRendering()):
+-        error("XBMC needs hardware accelerated OpenGL rendering.\nInstall an appropriate graphics driver.\n\nPlease consult XBMC Wiki for supported hardware\nhttp://wiki.xbmc.org/?title=Supported_hardware")
++        error("XBMC needs hardware accelerated EGL rendering.\nInstall an appropriate graphics driver.\n\nPlease consult XBMC Wiki for supported hardware\nhttp://wiki.xbmc.org/?title=Supported_hardware")
+ 
+     if (badColorDepth()):
+         error("XBMC cannot run unless the\nscreen color depth is atleast 24 bit.\n\nPlease reconfigure your screen.")
