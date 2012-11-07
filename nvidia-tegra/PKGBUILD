@@ -26,7 +26,7 @@ sha1sums=('a9fc7384a9de75108eefdddcfda0d06336fb2772'
 options=('!distcc' '!ccache' '!strip')
 
 package() {
-  pkgdesc="Nvidia drivers for the Tegra"
+  pkgdesc="Nvidia drivers for the Tegra2."
   nvlibpath="usr/lib/nvidia-tegra" 
  
   cd ${srcdir}
