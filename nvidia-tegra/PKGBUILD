@@ -12,16 +12,18 @@ arch=(armv7h)
 replaces=('nvidia-trimslice')
 conflicts=('nvidia-trimslice')
 license=('GPL')
-url="http://archlinuxarm.org"
+url="https://developer.nvidia.com/linux-tegra"
 source=('https://launchpad.net/ubuntu/quantal/+source/nvidia-graphics-drivers-tegra/16.2.0-0ubuntu3/+files/nvidia-graphics-drivers-tegra_16.2.0.orig.tar.gz'
-        'https://launchpad.net/ubuntu/quantal/+source/nvidia-graphics-drivers-tegra/16.2.0-0ubuntu3/+files/nvidia-graphics-drivers-tegra_16.2.0-0ubuntu3.debian.tar.gz'
+	'http://developer.download.nvidia.com/devzone/devcenter/tools/files/l4t/r16_Release_v1.0/ventana_release_armhf/ventana_Tegra-Linux-R16.1.0_armhf.tbz2'
 	'http://developer.download.nvidia.com/devzone/devcenter/tools/files/l4t/r16_Release_v1.0/ventana_release_armhf/ventana_Tegra-Linux-codecs-R16.1.0_armhf.tbz2'
-	'http://developer.download.nvidia.com/devzone/devcenter/tools/files/l4t/r16_Release_v1.0/ventana_release_armhf/ventana_Tegra-Linux-R16.1.0_armhf.tbz2')
+	'61-tegra-gpu.conf'
+	'69-tegra-gpu.rules')
 sha1sums=('a9fc7384a9de75108eefdddcfda0d06336fb2772'
-          'b44fc42a07f2bc340fcfe1178524f59cc7285ef3'
-	  '3df5662e233cbba10af89ac19f43cca379408b75'
-	  'e7f3ff2de2957766e75dfdf96cc440c2556993c5')
-options=('!distcc' '!ccache')
+          'e7f3ff2de2957766e75dfdf96cc440c2556993c5'
+          '3df5662e233cbba10af89ac19f43cca379408b75'
+          'ca881604d54df7bed80cedee18ca6f0b76619e18'
+          '0c083c098c1231d767ded26075c2b92002c5e7cf')
+options=('!distcc' '!ccache' '!strip')
 
 package() {
   pkgdesc="Nvidia drivers for the Tegra"
@@ -34,14 +36,15 @@ package() {
   tar xf Linux_for_Tegra/nv_tegra/nv_sample_apps/nvgstapps.tbz2 
 
   mkdir -p etc/X11/xorg.conf.d lib/udev/rules.d etc/ld.so.conf.d
-  cp debian/61-tegra-gpu.conf etc/X11/xorg.conf.d/
-  cp debian/69-tegra-gpu.rules lib/udev/rules.d/
+  cp ${srcdir}/61-tegra-gpu.conf etc/X11/xorg.conf.d/
+  cp ${srcdir}/69-tegra-gpu.rules lib/udev/rules.d/
   echo "/${nvlibpath}" > etc/ld.so.conf.d/${pkgname}.conf
 
   mkdir ${nvlibpath}
   cd usr/lib
   ln -s libEGL.so.1 libEGL.so
   ln -s libGLESv2.so.2 libGLESv2.so
+  ln -s libGLESv1_CM.so.1 libGLESv1_CM.so
 
   cd ${srcdir}
   find usr/lib -maxdepth 1 ! -type d  -exec mv {} ${nvlibpath} \;
