@@ -1,0 +1,8 @@
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver=3.0.27-2-ac100
+
+PRESETS=('default')
+
+#default_config="/etc/mkinitcpio.conf"
+default_image="/boot/initramfs.img"
+#default_options=""
