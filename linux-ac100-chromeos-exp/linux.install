@@ -1,5 +1,5 @@
-KERNEL_NAME=-ac100-r16.2
-KERNEL_VERSION=3.1.10-1-ac100-r16.2
+KERNEL_NAME=-ac100-chromeos-exp
+KERNEL_VERSION=3.0.27-1-ac100-chromeos-exp
 bootimg=/boot/bootimg-linux${KERNEL_NAME}.img
 bootcfg=/boot/bootimg-linux${KERNEL_NAME}.cfg
 
@@ -16,3 +16,10 @@ post_install () {
 post_upgrade(){
   post_install
 }
+
+post_remove() {
+  # also remove the compat symlinks
+  rm -f boot/{initramfs-linux,bootimg-linux}${KERNEL_NAME}.img
+  rm -f boot/{initramfs-linux,bootimg-linux}${KERNEL_NAME}-fallback.img
+}
+

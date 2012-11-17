@@ -7,47 +7,53 @@ buildarch=4
 
 pkgname=('nvidia-tegra')
 pkgver=16.2.0
-pkgrel=1
+pkgrel=2
 arch=(armv7h)
 replaces=('nvidia-trimslice')
 conflicts=('nvidia-trimslice')
 license=('GPL')
-url="https://developer.nvidia.com/linux-tegra"
-source=('https://launchpad.net/ubuntu/quantal/+source/nvidia-graphics-drivers-tegra/16.2.0-0ubuntu3/+files/nvidia-graphics-drivers-tegra_16.2.0.orig.tar.gz'
-	'http://developer.download.nvidia.com/devzone/devcenter/tools/files/l4t/r16_Release_v1.0/ventana_release_armhf/ventana_Tegra-Linux-R16.1.0_armhf.tbz2'
-	'http://developer.download.nvidia.com/devzone/devcenter/tools/files/l4t/r16_Release_v1.0/ventana_release_armhf/ventana_Tegra-Linux-codecs-R16.1.0_armhf.tbz2'
+url="http://archlinuxarm.org"
+source=('http://developer.download.nvidia.com/akamai/mobile/files/L4T/ventana_Tegra-Linux-R16.2.0_armhf.tbz2'
+        'http://developer.download.nvidia.com/akamai/mobile/files/L4T/ventana_Tegra-Linux-codecs-R16.2.0_armhf.tbz2'
 	'61-tegra-gpu.conf'
 	'69-tegra-gpu.rules')
-sha1sums=('a9fc7384a9de75108eefdddcfda0d06336fb2772'
-          'e7f3ff2de2957766e75dfdf96cc440c2556993c5'
-          '3df5662e233cbba10af89ac19f43cca379408b75'
+sha1sums=('6c5d9744c8737c69498dd0211f24d40b03b37802'
+          '4fffdf97e8a6e789ff507f7ab4db7288e480ad29'
           'ca881604d54df7bed80cedee18ca6f0b76619e18'
           '0c083c098c1231d767ded26075c2b92002c5e7cf')
 options=('!distcc' '!ccache' '!strip')
 
 package() {
-  pkgdesc="Nvidia drivers for the Tegra2."
-  nvlibpath="usr/lib/nvidia-tegra" 
+  pkgdesc="Nvidia drivers for the Tegra"
+  nvlibpath="/usr/lib/nvidia-tegra" 
  
   cd ${srcdir}
-  tar xf tegra_bins.tar.gz 
-  tar xf tegra-drivers-abi13.tbz2 
-  tar xf restricted_codecs.tbz2
-  tar xf Linux_for_Tegra/nv_tegra/nv_sample_apps/nvgstapps.tbz2 
 
-  mkdir -p etc/X11/xorg.conf.d lib/udev/rules.d etc/ld.so.conf.d
+  tar xf restricted_codecs.tbz2 -C ${pkgdir}
+  tar xf Linux_for_Tegra/nv_tegra/nvidia_drivers.tbz2 -C ${pkgdir}
+  tar xf Linux_for_Tegra/nv_tegra/nv_sample_apps/nvgstapps.tbz2 -C ${pkgdir}
+
+  cd ${pkgdir}
+  rm -rf etc
+  mkdir -p etc/X11/xorg.conf.d etc/ld.so.conf.d usr/lib/udev/rules.d ${pkgdir}/${nvlibpath}
   cp ${srcdir}/61-tegra-gpu.conf etc/X11/xorg.conf.d/
-  cp ${srcdir}/69-tegra-gpu.rules lib/udev/rules.d/
-  echo "/${nvlibpath}" > etc/ld.so.conf.d/${pkgname}.conf
+  cp ${srcdir}/69-tegra-gpu.rules usr/lib/udev/rules.d/
+  echo "${nvlibpath}" > etc/ld.so.conf.d/${pkgname}.conf
 
-  mkdir ${nvlibpath}
   cd usr/lib
   ln -s libEGL.so.1 libEGL.so
   ln -s libGLESv2.so.2 libGLESv2.so
   ln -s libGLESv1_CM.so.1 libGLESv1_CM.so
 
-  cd ${srcdir}
-  find usr/lib -maxdepth 1 ! -type d  -exec mv {} ${nvlibpath} \;
+  cd xorg/modules/drivers/
+  rm -f tegra_drv.abi{{5..8},{10..12}}.so
+  ln -s tegra_drv.abi13.so tegra_drv.so
+
+  cd ${pkgdir}
+
+  find usr/lib -maxdepth 1 ! -type d  -exec mv {} ${pkgdir}/${nvlibpath} \;
   find usr/lib/xorg -type d -exec chmod 755 {} \;  
-  mv etc lib usr ${pkgdir}
+
+  mv lib/firmware usr/lib/
+  rm -rf lib
 }

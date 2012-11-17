@@ -1,0 +1,10 @@
+--- ac100-marvin24s-kernel/Makefile.orig	2012-11-13 02:13:23.150000003 +0400
++++ ac100-marvin24s-kernel/Makefile	2012-11-13 02:18:45.160000003 +0400
+@@ -368,6 +368,7 @@
+ 		   -fno-strict-aliasing -fno-common \
+ 		   -Werror-implicit-function-declaration \
+ 		   -Wno-format-security \
++		   -Wno-error=maybe-uninitialized -Wmaybe-uninitialized \
+ 		   -fno-delete-null-pointer-checks
+ KBUILD_AFLAGS_KERNEL :=
+ KBUILD_CFLAGS_KERNEL :=
