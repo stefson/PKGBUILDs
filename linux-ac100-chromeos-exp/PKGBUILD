@@ -16,7 +16,7 @@ optdepends=('crda: to set the correct wireless channels of your country')
 provides=(linux linux-headers)
 backup=("etc/mkinitcpio.d/${pkgname}.preset" "boot/bootimg-${pkgname}.cfg")
 install=linux.install
-source=("${_srcname}.tar.gz::http://gitorious.org/ac100/marvin24s-kernel/archive-tarball/939a863d"
+source=("${_srcname}.tar.gz::https://gitorious.org/ac100/marvin24s-kernel?p=ac100:marvin24s-kernel.git;a=snapshot;h=939a863d;sf=tgz"
         linux.install
         linux.preset
         bootimg.cfg
