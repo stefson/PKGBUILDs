@@ -1,0 +1,26 @@
+From 158c9bf883a203530b2f558be1b3cd168fc3d202 Mon Sep 17 00:00:00 2001
+From: desalesouche <desalesouche@gmail.com>
+Date: Sun, 15 Jun 2014 14:14:40 +0200
+Subject: [PATCH] Fix this warning by removing a unneeded use of defined
+
+TIMEC   kernel/timeconst.h
+defined(@array) is deprecated at kernel/timeconst.pl line 373.
+  (Maybe you should just omit the defined()?)
+http://linux-kernel.2935.n7.nabble.com/PATCH-1-5-kbuild-remove-deprecated-use-of-defined-in-timeconst-pl-td556009.html
+---
+ kernel/timeconst.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/timeconst.pl b/kernel/timeconst.pl
+index eb51d76e058a..6c1b8e7efbc8 100644
+--- a/kernel/timeconst.pl
++++ b/kernel/timeconst.pl
+@@ -370,7 +370,7 @@ (@)
+ 	}
+ 
+ 	@val = @{$canned_values{$hz}};
+-	if (!defined(@val)) {
++	if (!@val) { 
+ 		@val = compute_values($hz);
+ 	}
+ 	output($hz, @val);
