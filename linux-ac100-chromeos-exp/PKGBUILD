@@ -202,7 +202,7 @@ _package-headers() {
   rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,x86,xtensa}
 
 }
-md5sums=('01db0a33e78c0e5c81db8c23baec3b0c'
+md5sums=('1b26892ac38e3ee428b1dc1a574c1e83'
          'a9223e1fd69dcf4bce6f29ae57f64d0e'
          'eae91ed3c22a89210e80676b4a537b6a'
          'ce2cef729ecdd7c6ba0b4556d9af1584'
