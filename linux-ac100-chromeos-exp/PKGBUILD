@@ -25,7 +25,9 @@ source=("${_srcname}.tar.gz::https://gitorious.org/ac100/marvin24s-kernel?p=ac10
         maybe-uninitialized.patch
 	gcc-7.patch
 	fix-error-in-timeconst.patch
-	fix-warning-on-uninitialized-offset.patch)
+	fix-warning-on-uninitialized-offset.patch
+	fix-CVE-2016-5195-aka-dirty-cow.patch)
+
 build() {
   cd $srcdir/${_srcname}
 
@@ -36,6 +38,7 @@ build() {
   patch -Np1 -i "${srcdir}/gcc-7.patch"
   patch -Np1 -i "${srcdir}/fix-error-in-timeconst.patch"
   patch -Np1 -i "${srcdir}/fix-warning-on-uninitialized-offset.patch"
+  patch -Np1 -i "${srcdir}/fix-CVE-2016-5195-aka-dirty-cow.patch"
 
   cat "${srcdir}/config" > ./.config
   #cat "${srcdir}/marvin24s-kernel/arch/arm/configs/paz00_defconfig" > ./.config
@@ -216,4 +219,5 @@ md5sums=('2d2d33360a9a41d9842139c5154fee5d'
          'b297e392e8b64ef433499723adea810a'
          '36ee6adfb2f9292a8a40925e238bf0b3'
          'd4b5a5175fdfd78ec8bcd0d43d560fea'
-         'e1e127c3c747dee73ef2e07154ddf605')
+         'e1e127c3c747dee73ef2e07154ddf605'
+         'aac5fa81cbc8e0d93ba9748010a923c9')
