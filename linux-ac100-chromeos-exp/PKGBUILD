@@ -26,7 +26,8 @@ source=("${_srcname}.tar.gz::https://gitorious.org/ac100/marvin24s-kernel?p=ac10
 	gcc-7.patch
 	fix-error-in-timeconst.patch
 	fix-warning-on-uninitialized-offset.patch
-	fix-CVE-2016-5195-aka-dirty-cow.patch)
+	fix-CVE-2016-7117-remote-code-execution.patch)
+#diry-cow cannot be applied?
 
 build() {
   cd $srcdir/${_srcname}
@@ -38,7 +39,7 @@ build() {
   patch -Np1 -i "${srcdir}/gcc-7.patch"
   patch -Np1 -i "${srcdir}/fix-error-in-timeconst.patch"
   patch -Np1 -i "${srcdir}/fix-warning-on-uninitialized-offset.patch"
-  patch -Np1 -i "${srcdir}/fix-CVE-2016-5195-aka-dirty-cow.patch"
+  patch -Np1 -i "${srcdir}/fix-CVE-2016-7117-remote-code-execution.patch"
 
   cat "${srcdir}/config" > ./.config
   #cat "${srcdir}/marvin24s-kernel/arch/arm/configs/paz00_defconfig" > ./.config
@@ -210,14 +211,14 @@ _package-headers() {
   rm -rf "${pkgdir}"/usr/src/linux-${_kernver}/arch/{alpha,arm26,avr32,blackfin,cris,frv,h8300,ia64,m32r,m68k,m68knommu,mips,microblaze,mn10300,parisc,powerpc,ppc,s390,sh,sh64,sparc,sparc64,um,v850,x86,xtensa}
 
 }
-md5sums=('2d2d33360a9a41d9842139c5154fee5d'
+md5sums=('0d27d6f8269aface057c73fd866e398d'
          'a9223e1fd69dcf4bce6f29ae57f64d0e'
          'eae91ed3c22a89210e80676b4a537b6a'
          'ce2cef729ecdd7c6ba0b4556d9af1584'
          'ea1146c8e59d83e761ed5a6a47fcc217'
          '9d3c56a4b999c8bfbd4018089a62f662'
          'b297e392e8b64ef433499723adea810a'
-         '36ee6adfb2f9292a8a40925e238bf0b3'
+         'cb14cf796e50b650ccb9f32dea4a2354'
          'd4b5a5175fdfd78ec8bcd0d43d560fea'
          'e1e127c3c747dee73ef2e07154ddf605'
-         'aac5fa81cbc8e0d93ba9748010a923c9')
+         'b6cd6dba59d101db4ac8013e5ff8a6c1')
